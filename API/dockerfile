@@ -1,0 +1,19 @@
+#imagem oficial do python. usar a slim que é mais leve
+FROM python:3.14-slim
+
+WORKDIR /code
+
+#instalar as dependencias ante da aplicação, para garantir a infra necessária
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY app ./app
+
+#executar sem privilégios.
+#RUN user-add --create-home appuser
+#USER appuser
+
+EXPOSE 8000
+#formar a linha do terminal do linux que rodará nosso programa main.py
+CMD ["fastapi", "run", "app/main.py", "--host", "0.0.0.0", "--port","8000"]
